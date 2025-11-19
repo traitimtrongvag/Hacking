@@ -25,13 +25,12 @@ log_pool = [
     "Enumerating directories with dirb...",
     "Response code 200 OK from /admin/login",
     "SNMP community string: public",
-    "Exploit CVE-2022-1388 against F5 BIG-IP",
+    "Exploit CVE-202-1388 against F5 BIG-IP",
     "Metasploit: ms17_010 success, shell opened",
     "Found JWT token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "Exfiltrating data over DNS tunnel...",
     "Crontab hijacked with malicious job",
     "Payload executed via XSS in comment field",
-    # Thêm dữ liệu mới
     "Heartbleed vulnerability detected",
     "Zero-day exploit activated: CVE-2023-32456",
     "Bypassing 2FA using session hijacking",
@@ -50,10 +49,9 @@ log_pool = [
 ]
 
 def glitchy_write(text: str):
-    """In từng ký tự theo kiểu giật lag không mượt để mô phỏng máy cũ"""
     i = 0
     while i < len(text):
-        chunk_size = random.choice([1, 1, 2])  # đôi khi nhảy 2 ký tự
+        chunk_size = random.choice([1, 1, 2])
         chunk = text[i:i+chunk_size]
         sys.stdout.write(chunk)
         sys.stdout.flush()
@@ -63,8 +61,6 @@ def glitchy_write(text: str):
     print()
 
 def print_log(log: str):
-    """In log với màu sắc tinh tế chỉ khi cần thiết"""
-    # Chỉ highlight các dòng quan trọng hoặc nguy hiểm
     if "success" in log.lower() or "vuln" in log.lower() or "exploit" in log.lower():
         print(Fore.RED + Style.BRIGHT + log)
     elif "warning" in log.lower() or "alert" in log.lower():
@@ -72,43 +68,43 @@ def print_log(log: str):
     elif "connected" in log.lower() or "executing" in log.lower():
         print(Fore.CYAN + log)
     elif "detected" in log.lower() or "breached" in log.lower() or "compromised" in log.lower():
-        print(Fore.MAGENTA + Style.BRIGHT + log)  # Màu hồng cho các sự kiện phát hiện
+        print(Fore.MAGENTA + Style.BRIGHT + log)
     elif "attack" in log.lower() or "injected" in log.lower() or "poisoning" in log.lower():
-        print(Fore.LIGHTRED_EX + log)  # Màu đỏ nhạt cho các cuộc tấn công
+        print(Fore.LIGHTRED_EX + log)
     else:
         print(log)
 
 def simulate_output():
-    last_ddos_time = time.time() - 300  # đảm bảo chạy được lần đầu
+    last_ddos_time = time.time() - 300
 
-    try:  
-        while True:  
-            current_time = time.time()  
-            if current_time - last_ddos_time >= 300:  # >= 5 phút  
-                ddos_attack_simulation()  
-                last_ddos_time = current_time  
-                continue  
+    try:
+        while True:
+            current_time = time.time()
+            if current_time - last_ddos_time >= 300:
+                ddos_attack_simulation()
+                last_ddos_time = current_time
+                continue
 
-            mode = random.choice(["glitchy", "fast", "burst"])  
+            mode = random.choice(["glitchy", "fast", "burst"])
 
-            if mode == "glitchy":  
-                glitchy_write(random.choice(log_pool))  
-                time.sleep(random.uniform(0.3, 0.6))  
+            if mode == "glitchy":
+                glitchy_write(random.choice(log_pool))
+                time.sleep(random.uniform(0.3, 0.6))
 
-            elif mode == "fast":  
-                for _ in range(random.randint(2, 5)):  
-                    print_log(random.choice(log_pool))  
-                    time.sleep(random.uniform(0.05, 0.12))  
+            elif mode == "fast":
+                for _ in range(random.randint(2, 5)):
+                    print_log(random.choice(log_pool))
+                    time.sleep(random.uniform(0.05, 0.12))
 
-            elif mode == "burst":  
-                for _ in range(random.randint(8, 15)):  
-                    print_log(random.choice(log_pool))  
-                time.sleep(random.uniform(0.1, 0.4))  
+            elif mode == "burst":
+                for _ in range(random.randint(8, 15)):
+                    print_log(random.choice(log_pool))
+                time.sleep(random.uniform(0.1, 0.4))
 
-            if random.random() < 0.1:  
-                time.sleep(random.uniform(0.7, 1.4))  # mô phỏng delay  
+            if random.random() < 0.1:
+                time.sleep(random.uniform(0.7, 1.4))
 
-    except KeyboardInterrupt:  
+    except KeyboardInterrupt:
         print("\n[!] Simulation terminated.")
 
 def ddos_attack_simulation():
@@ -146,10 +142,9 @@ def ddos_attack_simulation():
         "    \"\"              ^\""
     ]
 
-    # In icon với hiệu ứng từng dòng nhanh
     for line in ddos_icon:
         print(Fore.RED + line)
-        time.sleep(0.03)  # Thời gian delay ngắn để tạo hiệu ứng
+        time.sleep(0.03)
 
     ddos_payloads = [
         "Sending SYN packet to 203.0.113.5:80",
@@ -165,7 +160,6 @@ def ddos_attack_simulation():
         "Flooding port 22 with 10k SSH requests",
         "Overlapping fragment sent to 192.168.1.1",
         "Sending crafted packet payload: \x41\x41\x41...",
-        # Thêm payload mới
         "IoT botnet activated: 15,000 devices online",
         "DNS amplification attack initiated",
         "NTP reflection attack in progress",
@@ -175,12 +169,12 @@ def ddos_attack_simulation():
         "RUDY attack: long form field submissions"
     ]
 
-    try:  
-        for _ in range(random.randint(30, 80)):  # Burst 30-80 dòng  
-            line = random.choice(ddos_payloads)  
-            print(Fore.RED + Style.BRIGHT + line)  
-            time.sleep(random.uniform(0.005, 0.02))  # rất nhanh  
-    except KeyboardInterrupt:  
+    try:
+        for _ in range(random.randint(30, 80)):
+            line = random.choice(ddos_payloads)
+            print(Fore.RED + Style.BRIGHT + line)
+            time.sleep(random.uniform(0.005, 0.02))
+    except KeyboardInterrupt:
         print("\n[!] DDoS simulation stopped.")
 
 if __name__ == "__main__":
